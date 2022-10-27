@@ -34,7 +34,7 @@ jobs:
         if: steps.changed-files-specific.outputs.any_changed == 'true'
         run: |
           for changed_folder in ${{ steps.changed-files-specific.outputs.all_changed_files }}; do
-            folder=${changed_folder%/*}"
+            folder=${changed_folder%/*}
             echo "terragrunt run-all plan --terragrunt-working-dir $folder --terragrunt-non-interactive"
           done
           
