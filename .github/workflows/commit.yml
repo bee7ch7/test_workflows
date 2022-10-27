@@ -1,1 +1,20 @@
-###
+name: ChangedFolders
+
+on:
+  push:
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  lint-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get Changes
+        run: |
+          folders=`git diff --dirstat=files,1 HEAD~1 | sed 's/^[ 0-9.]\+% //g' | uniq || true`
+          echo "last_changes=$folders" >> $GITHUB_ENV
+      - name: Show changes
+        run: |
+          echo ${{ env.last_changes }}
